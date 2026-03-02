@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  lint:
     runs-on: ubuntu-latest
     steps:
       - name: Requperer le code
@@ -21,12 +21,27 @@ jobs:
           python-version: 3.11
       - name: install dependnces
         run: pip install -r requirements.txt
-      
       - name: Lint le code
         run: |
-          flake8 app --count --select=E9,F63,F7,F82,F841 --show-source --statistics
-          flake8 app --count --max-complexity=10 --max-line-length=127 --statistics
           flake8 app --count --max-line-length=127 --statistics
-      - name: run tests
-        run: PYTHONPATH=. pytest -v
-        
+          flake8 tests --count --max-line-length=127 --statistics
+  test:
+    needs: lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Requperer le code
+        uses: actions/checkout@v4
+      - name: install python
+        uses: actions/setup-python@v5
+      - name: test with coverture
+        run: pytest tests/ -v --cov=--show-source
+  build1:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: python build1
+        run: python -m build
+      - name: upload the result
+        uses: actions/upload-artifact@v3
+
+    
