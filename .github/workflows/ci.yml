@@ -41,10 +41,10 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     steps:
-      - name: install dependnces
-        run: pip install -r requirements.txt
       - name: python build1
-        run: python -m build
+        run: |
+          pip install build
+          python -m build
       - name: upload the result
         uses: actions/upload-artifact@v4
 
