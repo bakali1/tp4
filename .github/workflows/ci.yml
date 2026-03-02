@@ -28,5 +28,5 @@ jobs:
           flake8 app --count --max-complexity=10 --max-line-length=127 --statistics
           flake8 app --count --max-line-length=127 --statistics
       - name: run tests
-        run: pytest tests/ -v
+        run: PYTHONPATH=. pytest -v
         
