@@ -41,6 +41,10 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     steps:
+      - name: Requperer le code
+        uses: actions/checkout@v4
+      - name: install dependnces
+        run: pip install -r requirements.txt
       - name: python build1
         run: |
           pip install build
