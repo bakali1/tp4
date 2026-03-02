@@ -36,7 +36,7 @@ jobs:
       - name: install dependnces
         run: pip install -r requirements.txt
       - name: test with coverture
-        run: PYTHONPATH=. pytest -v --cov=--show-source
+        run: PYTHONPATH=. pytest -v --cov=src
   build1:
     needs: test
     runs-on: ubuntu-latest
